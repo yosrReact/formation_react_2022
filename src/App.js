@@ -1,17 +1,13 @@
 import React from "react"
 import "./App.css"
-import TaskForm from "./components/taskForm/TaskForm"
-import Task from "./components/task/Task"
 import Hello from "./components/hello/Hello"
+import TaskPage from "./pages/tasksPage/TaskPage"
 
 function App() {
   return (
     <div className="tasks-list">
       <Hello />
-      <TaskForm />
-      <Task />
-      <Task />
-      <Task />
+      <TaskPage />
     </div>
   )
 }
