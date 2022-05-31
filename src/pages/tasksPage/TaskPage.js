@@ -1,6 +1,7 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import TaskForm from "../../components/taskForm/TaskForm"
 import TasksList from "./../../components/tasksList/TasksList"
+import * as api from "../../services/tasks.service"
 
 function TaskPage() {
   const [isVisible, setIsVisible] = useState(true)
@@ -8,46 +9,120 @@ function TaskPage() {
     setIsVisible(!isVisible)
   }
 
-  const loading = false
-  const [tasks, setTasks] = useState([
-    {
-      _id: "1",
-      title: "Learn html",
-      duration: 60,
-    },
-    {
-      _id: "2",
-      title: "Learn react",
-      duration: 30,
-    },
-    {
-      _id: "3",
-      title: "Learn node",
-      duration: 50,
-    },
-  ])
+  const [tasks, setTasks] = useState([])
   const sayHello = () => {
     alert("Hello")
   }
-  const addTask = (title) => {
-    setTasks([...tasks, { _id: Math.random() + "", title }])
+
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true)
+      setError(false)
+      try {
+        const result = await api.fetchTasks()
+        setTasks(result)
+        setLoading(false)
+      } catch (e) {
+        setLoading(false)
+        setError(true)
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  const addTask = async (title, duration) => {
+    try {
+      setLoading(true)
+      const newTask = await api.addTask({
+        title,
+      })
+      setTasks([...tasks, newTask])
+      setLoading(false)
+    } catch (e) {
+      console.log("error")
+    }
   }
-  const deleteTask = (id) => {
-    const newTasks = tasks.filter((task) => task._id !== id)
-    setTasks(newTasks)
+  const deleteTask = async (id) => {
+    try {
+      setLoading(true)
+      await api.deleteTask(id)
+      const newTasks = tasks.filter((task) => task._id !== id)
+      setTasks(newTasks)
+      setLoading(false)
+    } catch (e) {
+      console.log("error")
+    }
   }
 
-  const updateTask = (id, title) => {
-    const newTasks = tasks.map((task) =>
-      task._id === id ? { _id: id, title } : task
-    )
-    setTasks(newTasks)
+  const updateTask = async (id, title, duration) => {
+    try {
+      setLoading(true)
+      const newTask = await api.updateTask(id, {
+        title,
+      })
+      const newTasks = tasks.map((task) => (task._id === id ? newTask : task))
+      setTasks(newTasks)
+      setLoading(false)
+    } catch (e) {
+      console.log("error")
+    }
   }
+  const [searchValue, setSearchValue] = useState("")
+
+  // 3ème forme de useEffect
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     setLoading(true)
+  //     if (searchValue.length === 0) {
+  //       console.log("tasks empty")
+  //       setTasks([])
+  //       setLoading(false)
+  //     } else {
+  //       const result = await api.fetchTasksByFilter(searchValue)
+  //       console.log("tasks form api : " + searchValue)
+  //       setTasks(result)
+  //       setLoading(false)
+  //     }
+  //   }
+  //   console.log("searchValue", searchValue)
+  //   fetchData()
+  // }, [searchValue])
+
+  // 4ème forme de useEffect
+  // useEffect(() => {
+  //   let didCancel = false
+  //   const fetchData = async () => {
+  //     setLoading(true)
+  //     if (!searchValue) {
+  //       setTasks([])
+  //       setLoading(false)
+  //     } else {
+  //       const result = await api.fetchTasksByFilter(searchValue)
+  //       if (!didCancel) {
+  //         console.log("result: ", searchValue)
+
+  //         setTasks(result)
+  //         setLoading(false)
+  //       }
+  //     }
+  //   }
+  //   // console.log("useEffect:", searchValue)
+  //   fetchData()
+
+  //   return () => {
+  //     console.log("cleanup: ", searchValue)
+  //     didCancel = true
+  //   }
+  // }, [searchValue])
 
   return (
     <div className="tasks-list">
       <button onClick={() => toggleVisibility()}>Toggle visibility</button>
       <TaskForm addTask={addTask} />
+      {error && <div>Error....</div>}
 
       {loading ? (
         <div>loading...</div>

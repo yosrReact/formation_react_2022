@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import "./TaskForm.css"
 export default function TaskForm(props) {
   const [title, setTitle] = useState("")
@@ -6,6 +6,13 @@ export default function TaskForm(props) {
     props.addTask(title)
     setTitle("")
   }
+
+  //1ère forme de useEffect
+  useEffect(() => {
+    // console.log("hello")
+    document.title = title
+    // setTitle("hello"+ Math.random())
+  })
 
   const addTask = "Add a task"
   const steps = ["Enter the task title", "Click on add task"]
