@@ -1,32 +1,38 @@
 import React from "react"
 import TaskForm from "../../components/taskForm/TaskForm"
-import Task from "../../components/task/Task"
+import TasksList from "./../../components/tasksList/TasksList"
 
 function TaskPage() {
   const loading = false
+  const tasks = [
+    {
+      _id: "1",
+      title: "Learn html",
+      duration: 60,
+    },
+    {
+      _id: "2",
+      title: "Learn react",
+      duration: 30,
+    },
+    {
+      _id: "3",
+      title: "Learn node",
+      duration: 50,
+    },
+  ]
+  const sayHello = () => {
+    alert("Hello")
+  }
 
   return (
-    <div className="tasks-list">
+    <div>
       {loading ? (
         <div>loading...</div>
       ) : (
         <>
-          <TaskForm />
-          <Task
-            title="learn Html"
-            duration={60}
-            details={{ difficulty: 8, level: "level 2" }}
-          />
-          <Task
-            title="learn React"
-            duration={120}
-            details={{ difficulty: 8, level: "level 2" }}
-          />
-          <Task
-            title="learn Angular"
-            duration={180}
-            details={{ difficulty: 8, level: "level 2" }}
-          />
+          <TaskForm sayHello={sayHello} />
+          <TasksList tasks={tasks} />
         </>
       )}
     </div>

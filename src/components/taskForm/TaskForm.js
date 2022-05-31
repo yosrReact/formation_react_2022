@@ -1,6 +1,8 @@
 import React from "react"
 import "./TaskForm.css"
-export default function TaskForm() {
+export default function TaskForm(props) {
+  // props.sayHello()
+
   const addTask = "Add a task"
   const steps = ["Enter the task title", "Click on add task"]
 
