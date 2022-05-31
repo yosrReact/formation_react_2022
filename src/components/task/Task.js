@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import "./Task.css"
 export default function Task({ id, title, duration, deleteTask, updateTask }) {
   const [updateMode, setUpdateMode] = useState(false)
@@ -10,11 +11,24 @@ export default function Task({ id, title, duration, deleteTask, updateTask }) {
   function help() {
     return <div>click for help</div>
   }
+  const navigate = useNavigate()
+  const handleDetails = () => {
+    navigate(`/tasks/${id}`)
+  }
   return (
     <div className="task" style={{ backgroundColor: "cyan" }}>
       {!updateMode ? (
         <>
-          <div className="title">{title}</div>
+          <Link to={`/tasks/${id}`}>
+            {/* chemin relative sans le "/" */}
+            {/* <Link to={`${id}`}> */}
+
+            {/* <div className="title" onClick={handleDetails}>
+            {title}
+          </div> */}
+
+            <div className="title">{title}</div>
+          </Link>
           <div className="title">{duration}</div>
           {/* <div className="title">{details.level}</div> */}
 
