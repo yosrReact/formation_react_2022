@@ -5,13 +5,20 @@ import Task from "./components/task/Task"
 import Hello from "./components/hello/Hello"
 
 function App() {
+  const loading = false
   return (
     <div className="tasks-list">
-      <Hello />
-      <TaskForm />
-      <Task />
-      <Task />
-      <Task />
+      {loading ? (
+        <div>loading ...</div>
+      ) : (
+        <>
+          <Hello />
+          <TaskForm />
+          <Task />
+          <Task />
+          <Task />
+        </>
+      )}
     </div>
   )
 }
