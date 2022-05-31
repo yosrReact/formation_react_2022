@@ -10,6 +10,7 @@ export default function TasksList(props) {
           title={task.title}
           duration={task.duration}
           deleteTask={props.deleteTask}
+          updateTask={props.updateTask}
         />
       ))}
     </div>

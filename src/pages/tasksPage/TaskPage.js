@@ -37,12 +37,16 @@ function TaskPage() {
     setTasks(newTasks)
   }
 
+  const updateTask = (id, title) => {
+    const newTasks = tasks.map((task) =>
+      task._id === id ? { _id: id, title } : task
+    )
+    setTasks(newTasks)
+  }
+
   return (
     <div className="tasks-list">
-      {/* 1ère solution */}
       <button onClick={() => toggleVisibility()}>Toggle visibility</button>
-      {/* 2ème solution */}
-      {/* <button onClick={toggleVisibility}>Toggle visibility</button> */}
       <TaskForm addTask={addTask} />
 
       {loading ? (
@@ -50,7 +54,11 @@ function TaskPage() {
       ) : (
         isVisible && (
           <>
-            <TasksList tasks={tasks} deleteTask={deleteTask} />
+            <TasksList
+              tasks={tasks}
+              deleteTask={deleteTask}
+              updateTask={updateTask}
+            />
           </>
         )
       )}

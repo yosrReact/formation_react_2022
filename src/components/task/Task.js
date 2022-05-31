@@ -1,21 +1,44 @@
-import React from "react"
+import React, { useState } from "react"
 import "./Task.css"
-export default function Task({ id, title, duration, deleteTask }) {
+export default function Task({ id, title, duration, deleteTask, updateTask }) {
+  const [updateMode, setUpdateMode] = useState(false)
+  const [titleToUpdate, setTitleToUpdate] = useState(title)
+  const handleUpdateTask = () => {
+    updateTask(id, titleToUpdate)
+    setUpdateMode(false)
+  }
   function help() {
     return <div>click for help</div>
   }
   return (
     <div className="task" style={{ backgroundColor: "cyan" }}>
-      <div className="title">{title}</div>
-      <div className="title">{duration}</div>
-      {/* <div className="title">{details.level}</div> */}
+      {!updateMode ? (
+        <>
+          <div className="title">{title}</div>
+          <div className="title">{duration}</div>
+          {/* <div className="title">{details.level}</div> */}
 
-      <div className="actions">
-        <button onClick={() => deleteTask(id)}>delete</button>
+          <div className="actions">
+            <button onClick={() => deleteTask(id)}>delete</button>
 
-        <span>update</span>
-      </div>
-      {help()}
+            <button onClick={() => setUpdateMode(true)}>update</button>
+          </div>
+          {help()}
+        </>
+      ) : (
+        <div>
+          <input
+            type="text"
+            name="title"
+            value={titleToUpdate}
+            onChange={(e) => setTitleToUpdate(e.target.value)}
+          />
+
+          <button className="button" onClick={handleUpdateTask}>
+            Update a task
+          </button>
+        </div>
+      )}
     </div>
   )
 }

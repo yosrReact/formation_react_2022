@@ -2,11 +2,11 @@ import React, { useState } from "react"
 import "./TaskForm.css"
 export default function TaskForm(props) {
   const [title, setTitle] = useState("")
-
   const handleAddTask = () => {
     props.addTask(title)
     setTitle("")
   }
+
   const addTask = "Add a task"
   const steps = ["Enter the task title", "Click on add task"]
 
