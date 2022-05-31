@@ -5,7 +5,7 @@ import TaskPage from "./pages/tasksPage/TaskPage"
 
 function App() {
   return (
-    <div className="tasks-list">
+    <div className="app">
       <Hello />
       <TaskPage />
     </div>
