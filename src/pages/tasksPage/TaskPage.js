@@ -26,12 +26,12 @@ function TaskPage() {
   }
 
   return (
-    <div>
+    <div className="tasks-list">
+      <TaskForm sayHello={sayHello} />
       {loading ? (
         <div>loading...</div>
       ) : (
         <>
-          <TaskForm sayHello={sayHello} />
           <TasksList tasks={tasks} />
         </>
       )}
