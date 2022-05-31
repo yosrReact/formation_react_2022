@@ -31,17 +31,17 @@ function TaskPage() {
   }
 
   return (
-    <div>
+    <div className="tasks-list">
       {/* 1ère solution */}
       <button onClick={() => toggleVisibility()}>Toggle visibility</button>
       {/* 2ème solution */}
       {/* <button onClick={toggleVisibility}>Toggle visibility</button> */}
+      <TaskForm sayHello={sayHello} />
       {loading ? (
         <div>loading...</div>
       ) : (
         isVisible && (
           <>
-            <TaskForm sayHello={sayHello} />
             <TasksList tasks={tasks} />
           </>
         )
