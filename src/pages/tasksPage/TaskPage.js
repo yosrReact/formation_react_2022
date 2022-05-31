@@ -7,11 +7,11 @@ function TaskPage() {
 
   return (
     <div className="tasks-list">
+      <TaskForm />
       {loading ? (
         <div>loading...</div>
       ) : (
         <>
-          <TaskForm />
           <Task />
           <Task />
           <Task />
