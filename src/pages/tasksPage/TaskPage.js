@@ -9,7 +9,7 @@ function TaskPage() {
   }
 
   const loading = false
-  const tasks = [
+  const [tasks, setTasks] = useState([
     {
       _id: "1",
       title: "Learn html",
@@ -25,9 +25,16 @@ function TaskPage() {
       title: "Learn node",
       duration: 50,
     },
-  ]
+  ])
   const sayHello = () => {
     alert("Hello")
+  }
+  const addTask = (title) => {
+    setTasks([...tasks, { _id: Math.random() + "", title }])
+  }
+  const deleteTask = (id) => {
+    const newTasks = tasks.filter((task) => task._id !== id)
+    setTasks(newTasks)
   }
 
   return (
@@ -36,13 +43,14 @@ function TaskPage() {
       <button onClick={() => toggleVisibility()}>Toggle visibility</button>
       {/* 2ème solution */}
       {/* <button onClick={toggleVisibility}>Toggle visibility</button> */}
-      <TaskForm sayHello={sayHello} />
+      <TaskForm addTask={addTask} />
+
       {loading ? (
         <div>loading...</div>
       ) : (
         isVisible && (
           <>
-            <TasksList tasks={tasks} />
+            <TasksList tasks={tasks} deleteTask={deleteTask} />
           </>
         )
       )}

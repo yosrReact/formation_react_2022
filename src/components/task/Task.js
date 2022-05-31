@@ -1,6 +1,6 @@
 import React from "react"
 import "./Task.css"
-export default function Task({ title, duration }) {
+export default function Task({ id, title, duration, deleteTask }) {
   function help() {
     return <div>click for help</div>
   }
@@ -11,7 +11,8 @@ export default function Task({ title, duration }) {
       {/* <div className="title">{details.level}</div> */}
 
       <div className="actions">
-        <span>delete</span>
+        <button onClick={() => deleteTask(id)}>delete</button>
+
         <span>update</span>
       </div>
       {help()}
