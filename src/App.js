@@ -14,9 +14,21 @@ function App() {
         <>
           <Hello />
           <TaskForm />
-          <Task />
-          <Task />
-          <Task />
+          <Task
+            title="learn Html"
+            duration={60}
+            details={{ difficulty: 8, level: "level 2" }}
+          />
+          <Task
+            title="learn React"
+            duration={120}
+            details={{ difficulty: 8, level: "level 2" }}
+          />
+          <Task
+            title="learn Angular"
+            duration={180}
+            details={{ difficulty: 8, level: "level 2" }}
+          />
         </>
       )}
     </div>

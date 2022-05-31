@@ -1,12 +1,15 @@
 import React from "react"
 import "./Task.css"
-export default function Task() {
+export default function Task(props) {
   function help() {
     return <div>click for help</div>
   }
   return (
     <div className="task" style={{ backgroundColor: "cyan" }}>
-      <div className="title">Learn html</div>
+      <div className="title">{props.title}</div>
+      <div className="title">{props.duration}</div>
+      <div className="title">{props.details.level}</div>
+
       <div className="actions">
         <span>delete</span>
         <span>update</span>
