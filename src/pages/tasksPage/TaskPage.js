@@ -12,7 +12,6 @@ function TaskPage() {
         <div>loading...</div>
       ) : (
         <>
-          <TaskForm />
           <Task
             title="learn Html"
             duration={60}
