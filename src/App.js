@@ -21,6 +21,7 @@ function App() {
           <Route path="/hello" element={<Hello />} />
           <Route path="teachers/" element={<TeacherRoutes />}>
             <Route path="tasks" element={<TaskPage />} />
+            <Route path="tasks/:id" element={<TaskDetails />} />
           </Route>
         </Routes>
       </Router>

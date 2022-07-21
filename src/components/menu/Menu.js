@@ -17,7 +17,7 @@ function Menu() {
       </li>
       <li>
         <NavLink
-          to="/tasks"
+          to="/teachers/tasks"
           style={({ isActive }) => (isActive ? customStyle : undefined)}
         >
           My tasks
