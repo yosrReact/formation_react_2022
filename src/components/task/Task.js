@@ -13,7 +13,11 @@ export default function Task({ id, title, duration, deleteTask, updateTask }) {
   }
   const navigate = useNavigate()
   const handleDetails = () => {
-    navigate(`${id}`)
+    if (duration > 55) {
+      navigate(`${id}`)
+    } else {
+      navigate("/hello")
+    }
   }
   return (
     <div className="task" style={{ backgroundColor: "cyan" }}>
