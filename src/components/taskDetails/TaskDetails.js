@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { fetchTaskById } from "../../services/tasks2.service"
+import { fetchTaskById } from "../../services/tasks.service"
 import { useParams, useLocation } from "react-router-dom"
 function TaskDetails() {
   const [task, setTask] = useState({})
