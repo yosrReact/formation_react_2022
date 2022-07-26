@@ -2,73 +2,65 @@ import React, { useState, useEffect } from "react"
 import TaskForm from "../../components/taskForm/TaskForm"
 import TasksList from "./../../components/tasksList/TasksList"
 import * as api from "../../services/tasks.service"
+import { useDispatch } from "react-redux"
+import { fetchTasks } from "./../../redux/actions/tasks.actions"
+import { useSelector } from "react-redux"
 
 function TaskPage() {
   const [isVisible, setIsVisible] = useState(true)
+  const dispatch = useDispatch()
+  const tasks = useSelector((store) => store.tasks)
   const toggleVisibility = () => {
     setIsVisible(!isVisible)
   }
 
-  const [tasks, setTasks] = useState([])
+  // const [tasks, setTasks] = useState([])
   const sayHello = () => {
     alert("Hello")
   }
 
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
+  // const [loading, setLoading] = useState(false)
+  // const [error, setError] = useState(false)
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true)
-      setError(false)
-      try {
-        const result = await api.fetchTasks()
-        setTasks(result)
-        setLoading(false)
-      } catch (e) {
-        setLoading(false)
-        setError(true)
-      }
-    }
-
-    fetchData()
+    dispatch(fetchTasks())
   }, [])
 
   const addTask = async (title, duration) => {
-    try {
-      setLoading(true)
-      const newTask = await api.addTask({
-        title,
-      })
-      setTasks([...tasks, newTask])
-      setLoading(false)
-    } catch (e) {
-      console.log("error")
-    }
+    // try {
+    //   setLoading(true)
+    //   const newTask = await api.addTask({
+    //     title,
+    //   })
+    //   setTasks([...tasks, newTask])
+    //   setLoading(false)
+    // } catch (e) {
+    //   console.log("error")
+    // }
   }
   const deleteTask = async (id) => {
-    try {
-      setLoading(true)
-      await api.deleteTask(id)
-      const newTasks = tasks.filter((task) => task._id !== id)
-      setTasks(newTasks)
-      setLoading(false)
-    } catch (e) {
-      console.log("error")
-    }
+    // try {
+    //   setLoading(true)
+    //   await api.deleteTask(id)
+    //   const newTasks = tasks.filter((task) => task._id !== id)
+    //   setTasks(newTasks)
+    //   setLoading(false)
+    // } catch (e) {
+    //   console.log("error")
+    // }
   }
 
   const updateTask = async (id, title, duration) => {
-    try {
-      setLoading(true)
-      const newTask = await api.updateTask(id, {
-        title,
-      })
-      const newTasks = tasks.map((task) => (task._id === id ? newTask : task))
-      setTasks(newTasks)
-      setLoading(false)
-    } catch (e) {
-      console.log("error")
-    }
+    // try {
+    //   setLoading(true)
+    //   const newTask = await api.updateTask(id, {
+    //     title,
+    //   })
+    //   const newTasks = tasks.map((task) => (task._id === id ? newTask : task))
+    //   setTasks(newTasks)
+    //   setLoading(false)
+    // } catch (e) {
+    //   console.log("error")
+    // }
   }
   const [searchValue, setSearchValue] = useState("")
 
@@ -122,15 +114,15 @@ function TaskPage() {
     <div className="tasks-list">
       <button onClick={() => toggleVisibility()}>Toggle visibility</button>
       <TaskForm addTask={addTask} />
-      {error && <div>Error....</div>}
+      {tasks.error && <div>Error....</div>}
 
-      {loading ? (
+      {tasks.loading ? (
         <div>loading...</div>
       ) : (
         isVisible && (
           <>
             <TasksList
-              tasks={tasks}
+              tasks={tasks.list}
               deleteTask={deleteTask}
               updateTask={updateTask}
             />
