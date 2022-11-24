@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useContext } from "react"
 import TaskForm from "../../components/taskForm/TaskForm"
 import TasksList from "./../../components/tasksList/TasksList"
 import * as api from "../../services/tasks2.service"
+import { UserContext } from "./../../App"
 
 function TaskPage() {
   const [isVisible, setIsVisible] = useState(true)
+  const user = useContext(UserContext)
+  console.log("user: ", user)
   const toggleVisibility = () => {
     setIsVisible(!isVisible)
   }
@@ -120,6 +123,7 @@ function TaskPage() {
 
   return (
     <div className="tasks-list">
+      {user && <div>hello {user.name}</div>}
       <button onClick={() => toggleVisibility()}>Toggle visibility</button>
       <TaskForm addTask={addTask} />
       {error && <div>Error....</div>}
