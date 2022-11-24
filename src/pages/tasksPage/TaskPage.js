@@ -122,6 +122,14 @@ function TaskPage() {
     <div className="tasks-list">
       <button onClick={() => toggleVisibility()}>Toggle visibility</button>
       <TaskForm addTask={addTask} />
+      {/* <input
+        type="text"
+        name="title"
+        value={searchValue}
+        onChange={(e) => {
+          setSearchValue(e.target.value)
+        }}
+      /> */}
       {error && <div>Error....</div>}
 
       {loading ? (
