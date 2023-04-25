@@ -34,7 +34,7 @@ function App() {
     return (
       <div className="app">
         <Router>
-          <Menu />
+          {/* <Menu /> */}
           <Routes>
             <Route
               path="/"
@@ -52,8 +52,11 @@ function App() {
     return (
       <div className="app">
         <Router>
-          <Menu />
-          {/* ... */}
+          {/* <Menu /> */}
+          <Routes>
+            <Route path="/" element={<Navigate to="/hello" replace />} />
+            <Route path="/hello" element={<Hello />} />
+          </Routes>
         </Router>
       </div>
     )

@@ -20,6 +20,7 @@ function Login() {
           type="email"
           name="email"
           value={email}
+          data-test="email"
           onChange={(e) => setEmail(e.target.value)}
         />
       </div>
@@ -28,12 +29,15 @@ function Login() {
         <input
           type="password"
           name="password"
+          data-test="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
       <div>
-        <button onClick={handleClick}>Se connecter</button>
+        <button onClick={handleClick} data-test="connect">
+          Se connecter
+        </button>
       </div>
     </div>
   )
