@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import TaskForm from "../../components/taskForm/TaskForm"
 import TasksList from "./../../components/tasksList/TasksList"
 import * as api from "../../services/tasks.service"
+import Hello from "./../../components/hello/Hello"
 
 function TaskPage() {
   const [isVisible, setIsVisible] = useState(true)
@@ -33,18 +34,22 @@ function TaskPage() {
     fetchData()
   }, [])
 
-  const addTask = async (title, duration) => {
-    try {
-      setLoading(true)
-      const newTask = await api.addTask({
-        title,
-      })
-      setTasks([...tasks, newTask])
-      setLoading(false)
-    } catch (e) {
-      console.log("error")
-    }
-  }
+  const addTask = useCallback(
+    async (title, duration) => {
+      try {
+        setLoading(true)
+        const newTask = await api.addTask({
+          title,
+        })
+        setTasks([...tasks, newTask])
+        setLoading(false)
+      } catch (e) {
+        console.log("error")
+      }
+    },
+    [tasks]
+  )
+
   const deleteTask = async (id) => {
     try {
       setLoading(true)
@@ -131,7 +136,7 @@ function TaskPage() {
         }}
       /> */}
       {error && <div>Error....</div>}
-
+      <Hello />
       {loading ? (
         <div>loading...</div>
       ) : (
