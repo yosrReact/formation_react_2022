@@ -42,7 +42,7 @@ function TaskPage() {
       setTasks([...tasks, newTask])
       setLoading(false)
     } catch (e) {
-      console.log("error")
+      console.log("error", e)
     }
   }
   const deleteTask = async (id) => {
@@ -53,7 +53,7 @@ function TaskPage() {
       setTasks(newTasks)
       setLoading(false)
     } catch (e) {
-      console.log("error")
+      console.log("error", e)
     }
   }
 
@@ -67,7 +67,7 @@ function TaskPage() {
       setTasks(newTasks)
       setLoading(false)
     } catch (e) {
-      console.log("error")
+      console.log("error", e)
     }
   }
   const [searchValue, setSearchValue] = useState("")
