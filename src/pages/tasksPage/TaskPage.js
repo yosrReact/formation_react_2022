@@ -3,8 +3,14 @@ import TaskForm from "../../components/taskForm/TaskForm"
 import TasksList from "./../../components/tasksList/TasksList"
 import * as api from "../../services/tasks.service"
 import { useDispatch } from "react-redux"
-import { fetchTasks } from "./../../redux/actions/tasks.actions"
+// import { fetchTasks } from "./../../redux/actions/tasks.actions"
 import { useSelector } from "react-redux"
+import {
+  fetchTasks,
+  addTask as addTaskFormRedux,
+  updateTask as updateTaskFromRedux,
+  deleteTask as deleteTaskFromRedux,
+} from "../../redux/reducers/tasks.reducers"
 
 function TaskPage() {
   const [isVisible, setIsVisible] = useState(true)
@@ -26,6 +32,7 @@ function TaskPage() {
   }, [])
 
   const addTask = async (title, duration) => {
+    dispatch(addTaskFormRedux({ title, duration }))
     // try {
     //   setLoading(true)
     //   const newTask = await api.addTask({
@@ -38,6 +45,7 @@ function TaskPage() {
     // }
   }
   const deleteTask = async (id) => {
+    dispatch(deleteTaskFromRedux(id))
     // try {
     //   setLoading(true)
     //   await api.deleteTask(id)
@@ -50,6 +58,7 @@ function TaskPage() {
   }
 
   const updateTask = async (id, title, duration) => {
+    dispatch(updateTaskFromRedux({ id, title, duration }))
     // try {
     //   setLoading(true)
     //   const newTask = await api.updateTask(id, {
