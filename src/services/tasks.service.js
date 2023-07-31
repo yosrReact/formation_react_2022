@@ -53,9 +53,16 @@ export const deleteTask = async (id) => {
   tasks = tasks.filter((task) => task._id !== id)
 }
 
-export const updateTask = async (id, task) => {
+export const updateTask = async (id, taskToUpdate) => {
   await delay(1000)
-  const updatedTask = { _di: id, title: task.title, duration: task.duration }
-  tasks = tasks.map((task) => (task._id === id ? updatedTask : task))
+  let updatedTask = {}
+  tasks = tasks.map((task) => {
+    if (task._id === id) {
+      updatedTask = { ...task, ...taskToUpdate }
+      return updatedTask
+    }
+    return task
+  })
+
   return updatedTask
 }
