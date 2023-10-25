@@ -3,6 +3,7 @@ import TaskForm from "../../components/taskForm/TaskForm"
 import TasksList from "./../../components/tasksList/TasksList"
 import * as api from "../../services/tasks.service"
 import Hello from "./../../components/hello/Hello"
+import { useFetch } from "../../hooks/useFetch"
 
 function TaskPage() {
   const [isVisible, setIsVisible] = useState(true)
@@ -10,53 +11,31 @@ function TaskPage() {
     setIsVisible(!isVisible)
   }
 
-  const [tasks, setTasks] = useState([])
+  const { data, loading, error, setData } = useFetch(api.fetchTasks)
+
   const sayHello = () => {
     alert("Hello")
   }
 
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true)
-      setError(false)
-      try {
-        const result = await api.fetchTasks()
-        setTasks(result)
-        setLoading(false)
-      } catch (e) {
-        setLoading(false)
-        setError(true)
-      }
-    }
-
-    fetchData()
-  }, [])
-
   const addTask = useCallback(
     async (title, duration) => {
       try {
-        setLoading(true)
         const newTask = await api.addTask({
           title,
         })
-        setTasks([...tasks, newTask])
-        setLoading(false)
+        setData([...data, newTask])
       } catch (e) {
         console.log("error")
       }
     },
-    [tasks]
+    [data, setData]
   )
 
   const deleteTask = async (id) => {
     try {
-      setLoading(true)
       await api.deleteTask(id)
-      const newTasks = tasks.filter((task) => task._id !== id)
-      setTasks(newTasks)
-      setLoading(false)
+      const newData = data.filter((task) => task._id !== id)
+      setData(newData)
     } catch (e) {
       console.log("error")
     }
@@ -64,13 +43,11 @@ function TaskPage() {
 
   const updateTask = async (id, title, duration) => {
     try {
-      setLoading(true)
       const newTask = await api.updateTask(id, {
         title,
       })
-      const newTasks = tasks.map((task) => (task._id === id ? newTask : task))
-      setTasks(newTasks)
-      setLoading(false)
+      const newData = data.map((task) => (task._id === id ? newTask : task))
+      setData(newData)
     } catch (e) {
       console.log("error")
     }
@@ -82,13 +59,13 @@ function TaskPage() {
   //   const fetchData = async () => {
   //     setLoading(true)
   //     if (searchValue.length === 0) {
-  //       console.log("tasks empty")
-  //       setTasks([])
+  //       console.log("data empty")
+  //       setData([])
   //       setLoading(false)
   //     } else {
-  //       const result = await api.fetchTasksByFilter(searchValue)
-  //       console.log("tasks form api : " + searchValue)
-  //       setTasks(result)
+  //       const result = await api.fetchDataByFilter(searchValue)
+  //       console.log("data form api : " + searchValue)
+  //       setData(result)
   //       setLoading(false)
   //     }
   //   }
@@ -102,14 +79,14 @@ function TaskPage() {
   //   const fetchData = async () => {
   //     setLoading(true)
   //     if (!searchValue) {
-  //       setTasks([])
+  //       setData([])
   //       setLoading(false)
   //     } else {
-  //       const result = await api.fetchTasksByFilter(searchValue)
+  //       const result = await api.fetchDataByFilter(searchValue)
   //       if (!didCancel) {
   //         console.log("result: ", searchValue)
 
-  //         setTasks(result)
+  //         setData(result)
   //         setLoading(false)
   //       }
   //     }
@@ -124,17 +101,10 @@ function TaskPage() {
   // }, [searchValue])
 
   return (
-    <div className="tasks-list">
+    <div className="data-list">
       <button onClick={() => toggleVisibility()}>Toggle visibility</button>
       <TaskForm addTask={addTask} />
-      {/* <input
-        type="text"
-        name="title"
-        value={searchValue}
-        onChange={(e) => {
-          setSearchValue(e.target.value)
-        }}
-      /> */}
+
       {error && <div>Error....</div>}
       <Hello />
       {loading ? (
@@ -143,7 +113,7 @@ function TaskPage() {
         isVisible && (
           <>
             <TasksList
-              tasks={tasks}
+              tasks={data}
               deleteTask={deleteTask}
               updateTask={updateTask}
             />

@@ -9,7 +9,7 @@ function App() {
   console.log("isMobile in app: ", isMobile)
   return (
     <div className="app">
-      {isMobile && <Hello />}
+      {/* {isMobile && <Hello />} */}
       <TaskPage />
     </div>
   )
