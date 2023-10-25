@@ -4,6 +4,7 @@ import TasksList from "./../../components/tasksList/TasksList"
 import * as api from "../../services/tasks.service"
 import Hello from "./../../components/hello/Hello"
 import { useFetch } from "../../hooks/useFetch"
+import Counter from "./../../components/counter/Counter"
 
 function TaskPage() {
   const [isVisible, setIsVisible] = useState(true)
@@ -107,6 +108,7 @@ function TaskPage() {
 
       {error && <div>Error....</div>}
       <Hello />
+      <Counter />
       {loading ? (
         <div>loading...</div>
       ) : (
